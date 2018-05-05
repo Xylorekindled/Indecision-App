@@ -8,7 +8,7 @@ class IndecisionApp extends React.Component
         this.handleAddOption = this.handleAddOption.bind(this);
 
         this.state = {
-            options: ['one', 'two', 'three', 'four']
+            options: props.options
         };
     }
 
@@ -42,12 +42,11 @@ class IndecisionApp extends React.Component
 
     render()
     {
-        const title = 'Indecision';
         const subtitle = 'Let computer choose for you...';
 
         return (
             <div>
-                <Header title={title} subtitle={subtitle}/>
+                <Header subtitle={subtitle}/>
                 <Action hasOptions={this.state.options.length > 0} handlePick={this.handlePick}/>
                 <Options options={this.state.options} handleDeleteOptions={this.handleDeleteOptions}/>
                 <AddOption handleAddOption={this.handleAddOption}/>
@@ -56,6 +55,24 @@ class IndecisionApp extends React.Component
     }
 }
 
+IndecisionApp.defaultProps = {
+    options: []
+};
+
+const Header = (props) => {
+    return (
+        <div>
+            <h1>{props.title}</h1>
+            {props.subtitle && <h2>{props.subtitle}</h2>}
+        </div>
+    );
+};
+
+Header.defaultProps = {
+    title: 'Indecision'
+};
+
+/*
 class Header extends React.Component
 {
     render()
@@ -68,7 +85,17 @@ class Header extends React.Component
         );
     }
 }
+*/
 
+const Action = (props) => {
+    return (
+        <div>
+            <button disabled={!props.hasOptions} onClick={props.handlePick}>What Should I do?</button>
+        </div>
+    );
+};
+
+/*
 class Action extends React.Component
 {
     render()
@@ -80,7 +107,22 @@ class Action extends React.Component
         );
     }
 }
+*/
 
+const Options = (props) => {
+    return (
+        <div>
+            <button onClick={props.handleDeleteOptions}>Remove All</button>
+            {
+                props.options.map((option) => {
+                    return <Option key={option} optionText={option}/>
+                })
+            }
+        </div>
+    );
+};
+
+/*
 class Options extends React.Component
 {
     render()
@@ -97,7 +139,17 @@ class Options extends React.Component
         );
     }
 }
+*/
 
+const Option = (props) => {
+    return (
+        <div>
+            <p>{props.optionText}</p>
+        </div>
+    );
+};
+
+/*
 class Option extends React.Component
 {
     render()
@@ -109,6 +161,7 @@ class Option extends React.Component
         );
     }
 }
+*/
 
 class AddOption extends React.Component
 {
@@ -152,4 +205,4 @@ class AddOption extends React.Component
     }
 }
 
-ReactDOM.render(<IndecisionApp/>, document.getElementById('app'));
+ReactDOM.render(<IndecisionApp options={['Backstreet Boys', 'NKOTB']}/>, document.getElementById('app'));
