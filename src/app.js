@@ -1,1 +1,6 @@
-console.log('app.js is running');
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+import IndecisionApp from './components/IndecisionApp';
+
+ReactDOM.render(<IndecisionApp options={['Backstreet Boys', 'NKOTB']}/>, document.getElementById('app'));
